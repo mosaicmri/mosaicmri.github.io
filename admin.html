@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MosaicMRI — Access Approvals</title>
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem("mosaic_theme");
+        var dark;
+        if (saved === "dark") {
+          dark = true;
+        } else if (saved === "light") {
+          dark = false;
+        } else {
+          dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        }
+        if (dark) document.documentElement.classList.add("dark");
+      } catch (_) {}
+    })();
+  </script>
+  <script src="js/site-config.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="theme.css" />
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <header class="border-b bg-white">
+    <div class="container mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="font-bold text-lg"><span class="text-[#6A7BA2]">Mosaic</span>MRI</div>
+      <div class="flex items-center gap-3">
+        <span class="text-sm text-gray-500">Access Approvals</span>
+        <button type="button" data-theme-toggle aria-label="Toggle theme"
+                class="px-3 py-1.5 rounded-xl border border-gray-300 bg-white text-sm font-semibold text-gray-700 hover:bg-gray-50 transition">
+          ☾
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-6 py-10">
+    <div class="max-w-3xl">
+      <h1 class="text-3xl font-extrabold tracking-tight">Pending Requests</h1>
+      <p class="mt-2 text-gray-600">Enter your admin key to review and approve access requests.</p>
+
+      <div class="mt-6 bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+        <label class="block text-sm font-semibold text-gray-700" for="adminKey">Admin key</label>
+        <div class="mt-2 flex flex-col sm:flex-row gap-3">
+          <input id="adminKey" type="password" class="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#6A7BA2]" placeholder="Enter admin key" />
+          <button id="loadBtn" class="px-5 py-3 rounded-2xl bg-[#6A7BA2] text-white text-sm font-semibold hover:bg-[#55668E] transition">Load Requests</button>
+        </div>
+        <p class="mt-3 text-xs text-gray-500">This key stays in your browser session and is not stored on the server.</p>
+      </div>
+
+      <div class="mt-6" id="status"></div>
+
+      <div class="mt-6" id="requests"></div>
+    </div>
+  </main>
+
+  <script src="js/access-api.js"></script>
+  <script src="js/theme.js"></script>
+  <script>
+    const callAccessApi = window.MosaicAccessApi && window.MosaicAccessApi.callAccessApi;
+
+    const loadBtn = document.getElementById("loadBtn");
+    const adminKeyInput = document.getElementById("adminKey");
+    const status = document.getElementById("status");
+    const requestsContainer = document.getElementById("requests");
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function renderStatus(message, tone = "info") {
+      const colors = {
+        info: "bg-[#FFF4F3] border-[#FFDFDE] text-[#3E4F73]",
+        success: "bg-green-50 border-green-200 text-green-800",
+        error: "bg-red-50 border-red-200 text-red-800",
+      };
+      status.innerHTML = `
+        <div class="rounded-xl border px-4 py-3 text-sm ${colors[tone] || colors.info}">
+          ${message}
+        </div>
+      `;
+    }
+
+    async function fetchRequests() {
+      const adminKey = adminKeyInput.value.trim();
+      if (!adminKey) {
+        renderStatus("Enter your admin key to continue.", "error");
+        return;
+      }
+      if (typeof callAccessApi !== "function") {
+        renderStatus("Access API helper is not loaded.", "error");
+        return;
+      }
+
+      renderStatus("Loading requests...");
+      let requests = [];
+      try {
+        const data = await callAccessApi("/access/admin/list", { admin_key: adminKey });
+        requests = data.requests || [];
+      } catch (error) {
+        renderStatus(error.message || "Failed to load requests.", "error");
+        return;
+      }
+
+      if (!requests.length) {
+        renderStatus("No pending requests.", "success");
+        requestsContainer.innerHTML = "";
+        return;
+      }
+
+      renderStatus(`${requests.length} pending request(s).`, "info");
+      requestsContainer.innerHTML = `
+        <div class="mt-4 space-y-4">
+          ${requests
+            .map(
+              (item) => `
+            <div class="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm">
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div>
+                  <div class="font-semibold text-gray-900">${escapeHtml(item.full_name)}</div>
+                  <div class="text-sm text-gray-600">${escapeHtml(item.email)}</div>
+                  <div class="text-sm text-gray-500">${escapeHtml(item.institution)}</div>
+                  <div class="mt-2 text-sm text-gray-700">
+                    <span class="font-semibold text-gray-800">Research use:</span>
+                    ${escapeHtml(item.research_use || "Not provided")}
+                  </div>
+                  <div class="mt-1 text-sm text-gray-700">
+                    <span class="font-semibold text-gray-800">Agreement:</span>
+                    ${item.agreement_accepted ? "Accepted" : "Not accepted"}
+                    ${item.agreement_version ? "(" + escapeHtml(item.agreement_version) + ")" : ""}
+                  </div>
+                  <div class="text-xs text-gray-500 mt-1">
+                    Agreement accepted at: ${item.agreement_accepted_at ? new Date(item.agreement_accepted_at).toLocaleString() : "N/A"}
+                  </div>
+                  <div class="text-xs text-gray-400 mt-1">Submitted ${item.created_at ? new Date(item.created_at).toLocaleString() : "N/A"}</div>
+                </div>
+                <div class="flex gap-2">
+                  <button class="approveBtn px-4 py-2 rounded-xl bg-[#6A7BA2] text-white text-sm font-semibold hover:bg-[#55668E] transition" data-email="${escapeHtml(item.email)}">
+                    Approve
+                  </button>
+                  <button class="denyBtn px-4 py-2 rounded-xl border border-gray-300 text-sm font-semibold hover:bg-gray-50 transition" data-email="${escapeHtml(item.email)}">
+                    Deny
+                  </button>
+                </div>
+              </div>
+            </div>
+          `
+            )
+            .join("")}
+        </div>
+      `;
+
+      const approveButtons = requestsContainer.querySelectorAll(".approveBtn");
+      const denyButtons = requestsContainer.querySelectorAll(".denyBtn");
+
+      approveButtons.forEach((button) => {
+        button.addEventListener("click", () => handleApprove(button.dataset.email));
+      });
+
+      denyButtons.forEach((button) => {
+        button.addEventListener("click", () => handleDeny(button.dataset.email));
+      });
+    }
+
+    async function handleApprove(email) {
+      const adminKey = adminKeyInput.value.trim();
+      renderStatus("Approving request...");
+
+      try {
+        const data = await callAccessApi("/access/admin/approve", {
+          admin_key: adminKey,
+          email: email,
+        });
+        if (data && data.approval_email_sent === false) {
+          const msg = data.approval_email_error
+            ? `Approved, but approval email failed: ${data.approval_email_error}`
+            : "Approved, but approval email was not sent.";
+          renderStatus(msg, "error");
+          fetchRequests();
+          return;
+        }
+      } catch (error) {
+        renderStatus(error.message || "Approval failed.", "error");
+        return;
+      }
+
+      renderStatus("Approved.", "success");
+      fetchRequests();
+    }
+
+    async function handleDeny(email) {
+      const adminKey = adminKeyInput.value.trim();
+      renderStatus("Denying request...");
+
+      try {
+        await callAccessApi("/access/admin/deny", {
+          admin_key: adminKey,
+          email: email,
+        });
+      } catch (error) {
+        renderStatus(error.message || "Deny failed.", "error");
+        return;
+      }
+
+      renderStatus("Request denied.", "success");
+      fetchRequests();
+    }
+
+    loadBtn.addEventListener("click", () => fetchRequests());
+  </script>
+</body>
+</html>
