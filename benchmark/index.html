@@ -139,8 +139,23 @@
                 </select>
               </div>
               <div>
+                <label class="block text-sm font-semibold text-gray-700">Team name</label>
+                <input required type="text" class="submit-team-name mt-2 w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4169E1]" placeholder="Your team name" />
+              </div>
+              <div>
                 <label class="block text-sm font-semibold text-gray-700">Approved email</label>
-                <input required type="email" class="submit-email mt-2 w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4169E1]" placeholder="your.email@institution.edu" />
+                <div class="mt-2 flex flex-col gap-3 sm:flex-row">
+                  <input required type="email" class="submit-email w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4169E1]" placeholder="your.email@institution.edu" />
+                  <button type="button" class="auth-send-btn rounded-xl border border-[#AFC2F7] bg-[#F3F6FF] px-4 py-3 text-sm font-semibold text-[#1F3B96] hover:bg-[#E5ECFF]">Send code</button>
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-gray-700">Verification code</label>
+                <div class="mt-2 flex flex-col gap-3 sm:flex-row">
+                  <input type="text" inputmode="numeric" class="auth-code w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4169E1]" placeholder="6-digit code from email" />
+                  <button type="button" class="auth-verify-btn rounded-xl border border-[#AFC2F7] bg-[#F3F6FF] px-4 py-3 text-sm font-semibold text-[#1F3B96] hover:bg-[#E5ECFF]">Verify</button>
+                </div>
+                <p class="auth-status mt-2 text-sm text-gray-600">Verify this email before uploading.</p>
               </div>
               <div>
                 <label class="block text-sm font-semibold text-gray-700">Model details</label>
@@ -194,7 +209,7 @@
               <thead class="bg-[#F3F6FF] text-gray-700">
                 <tr>
                   <th class="px-3 py-2 text-left font-semibold border-b border-gray-200">Rank</th>
-                  <th class="px-3 py-2 text-left font-semibold border-b border-gray-200">Email</th>
+                  <th class="px-3 py-2 text-left font-semibold border-b border-gray-200">Team Name</th>
                   <th class="px-3 py-2 text-left font-semibold border-b border-gray-200"><button type="button" class="metric-sort-btn hover:text-[#1F3B96]" data-metric="PSNR">PSNR</button></th>
                   <th class="px-3 py-2 text-left font-semibold border-b border-gray-200"><button type="button" class="metric-sort-btn hover:text-[#1F3B96]" data-metric="SSIM">SSIM</button></th>
                   <th class="px-3 py-2 text-left font-semibold border-b border-gray-200"><button type="button" class="metric-sort-btn hover:text-[#1F3B96]" data-metric="NMSE">NMSE</button></th>
@@ -256,8 +271,23 @@
                 </select>
               </div>
               <div>
+                <label class="block text-sm font-semibold text-gray-700">Team name</label>
+                <input required type="text" class="submit-team-name mt-2 w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4169E1]" placeholder="Your team name" />
+              </div>
+              <div>
                 <label class="block text-sm font-semibold text-gray-700">Approved email</label>
-                <input required type="email" class="submit-email mt-2 w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4169E1]" placeholder="your.email@institution.edu" />
+                <div class="mt-2 flex flex-col gap-3 sm:flex-row">
+                  <input required type="email" class="submit-email w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4169E1]" placeholder="your.email@institution.edu" />
+                  <button type="button" class="auth-send-btn rounded-xl border border-[#AFC2F7] bg-[#F3F6FF] px-4 py-3 text-sm font-semibold text-[#1F3B96] hover:bg-[#E5ECFF]">Send code</button>
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-gray-700">Verification code</label>
+                <div class="mt-2 flex flex-col gap-3 sm:flex-row">
+                  <input type="text" inputmode="numeric" class="auth-code w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4169E1]" placeholder="6-digit code from email" />
+                  <button type="button" class="auth-verify-btn rounded-xl border border-[#AFC2F7] bg-[#F3F6FF] px-4 py-3 text-sm font-semibold text-[#1F3B96] hover:bg-[#E5ECFF]">Verify</button>
+                </div>
+                <p class="auth-status mt-2 text-sm text-gray-600">Verify this email before uploading.</p>
               </div>
               <div>
                 <label class="block text-sm font-semibold text-gray-700">Model details</label>
@@ -311,7 +341,7 @@
               <thead class="bg-[#F3F6FF] text-gray-700">
                 <tr>
                   <th class="px-3 py-2 text-left font-semibold border-b border-gray-200">Rank</th>
-                  <th class="px-3 py-2 text-left font-semibold border-b border-gray-200">Email</th>
+                  <th class="px-3 py-2 text-left font-semibold border-b border-gray-200">Team Name</th>
                   <th class="px-3 py-2 text-left font-semibold border-b border-gray-200"><button type="button" class="metric-sort-btn hover:text-[#1F3B96]" data-metric="PSNR">PSNR</button></th>
                   <th class="px-3 py-2 text-left font-semibold border-b border-gray-200"><button type="button" class="metric-sort-btn hover:text-[#1F3B96]" data-metric="SSIM">SSIM</button></th>
                   <th class="px-3 py-2 text-left font-semibold border-b border-gray-200"><button type="button" class="metric-sort-btn hover:text-[#1F3B96]" data-metric="NMSE">NMSE</button></th>
@@ -372,8 +402,23 @@
                 </select>
               </div>
               <div>
+                <label class="block text-sm font-semibold text-gray-700">Team name</label>
+                <input required type="text" class="submit-team-name mt-2 w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4169E1]" placeholder="Your team name" />
+              </div>
+              <div>
                 <label class="block text-sm font-semibold text-gray-700">Approved email</label>
-                <input required type="email" class="submit-email mt-2 w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4169E1]" placeholder="your.email@institution.edu" />
+                <div class="mt-2 flex flex-col gap-3 sm:flex-row">
+                  <input required type="email" class="submit-email w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4169E1]" placeholder="your.email@institution.edu" />
+                  <button type="button" class="auth-send-btn rounded-xl border border-[#AFC2F7] bg-[#F3F6FF] px-4 py-3 text-sm font-semibold text-[#1F3B96] hover:bg-[#E5ECFF]">Send code</button>
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-gray-700">Verification code</label>
+                <div class="mt-2 flex flex-col gap-3 sm:flex-row">
+                  <input type="text" inputmode="numeric" class="auth-code w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#4169E1]" placeholder="6-digit code from email" />
+                  <button type="button" class="auth-verify-btn rounded-xl border border-[#AFC2F7] bg-[#F3F6FF] px-4 py-3 text-sm font-semibold text-[#1F3B96] hover:bg-[#E5ECFF]">Verify</button>
+                </div>
+                <p class="auth-status mt-2 text-sm text-gray-600">Verify this email before uploading.</p>
               </div>
               <div>
                 <label class="block text-sm font-semibold text-gray-700">Model details</label>
@@ -427,7 +472,7 @@
               <thead class="bg-[#F3F6FF] text-gray-700">
                 <tr>
                   <th class="px-3 py-2 text-left font-semibold border-b border-gray-200">Rank</th>
-                  <th class="px-3 py-2 text-left font-semibold border-b border-gray-200">Email</th>
+                  <th class="px-3 py-2 text-left font-semibold border-b border-gray-200">Team Name</th>
                   <th class="px-3 py-2 text-left font-semibold border-b border-gray-200"><button type="button" class="metric-sort-btn hover:text-[#1F3B96]" data-metric="PSNR">PSNR</button></th>
                   <th class="px-3 py-2 text-left font-semibold border-b border-gray-200"><button type="button" class="metric-sort-btn hover:text-[#1F3B96]" data-metric="SSIM">SSIM</button></th>
                   <th class="px-3 py-2 text-left font-semibold border-b border-gray-200"><button type="button" class="metric-sort-btn hover:text-[#1F3B96]" data-metric="NMSE">NMSE</button></th>
@@ -532,6 +577,7 @@
     }, {});
 
     let activeChallenge = "challenge1";
+    const AUTH_SESSION_STORAGE_KEY = "mosaic_benchmark_auth_session";
 
     const ruleDaily = document.getElementById("ruleDaily");
 
@@ -562,7 +608,12 @@
         panel,
         form: panel.querySelector(".submission-form"),
         submitButton: panel.querySelector(".submit-btn"),
+        teamName: panel.querySelector(".submit-team-name"),
         email: panel.querySelector(".submit-email"),
+        authSendButton: panel.querySelector(".auth-send-btn"),
+        authCode: panel.querySelector(".auth-code"),
+        authVerifyButton: panel.querySelector(".auth-verify-btn"),
+        authStatus: panel.querySelector(".auth-status"),
         modelDetails: panel.querySelector(".submit-model-details"),
         file: panel.querySelector(".submit-file"),
         uploadProgress: panel.querySelector(".upload-progress"),
@@ -583,6 +634,174 @@
         metricButtons: [...panel.querySelectorAll(".metric-sort-btn")],
         leaderboardBody: panel.querySelector(".leaderboard-body"),
       };
+    }
+
+    function loadAuthSession() {
+      try {
+        const raw = sessionStorage.getItem(AUTH_SESSION_STORAGE_KEY);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        if (!parsed || !parsed.email || !parsed.authToken || !parsed.expiresAt) return null;
+        if (Number(parsed.expiresAt) <= Date.now()) {
+          sessionStorage.removeItem(AUTH_SESSION_STORAGE_KEY);
+          return null;
+        }
+        return parsed;
+      } catch (_) {
+        return null;
+      }
+    }
+
+    function saveAuthSession(session) {
+      sessionStorage.setItem(AUTH_SESSION_STORAGE_KEY, JSON.stringify(session));
+    }
+
+    function clearAuthSession() {
+      sessionStorage.removeItem(AUTH_SESSION_STORAGE_KEY);
+    }
+
+    function getAuthSessionForEmail(email) {
+      const session = loadAuthSession();
+      if (!session) return null;
+      return String(session.email || "").trim().toLowerCase() === String(email || "").trim().toLowerCase() ? session : null;
+    }
+
+    function setAuthStatus(refs, message, tone = "info") {
+      const colors = {
+        info: "text-gray-600",
+        success: "text-emerald-700",
+        error: "text-rose-700",
+      };
+      refs.authStatus.className = `auth-status mt-2 text-sm ${colors[tone] || colors.info}`;
+      refs.authStatus.textContent = message;
+    }
+
+    function refreshAuthUi(refs) {
+      const email = String(refs.email.value || "").trim().toLowerCase();
+      const session = getAuthSessionForEmail(email);
+      if (session) {
+        const expiresText = new Date(Number(session.expiresAt)).toLocaleString();
+        setAuthStatus(refs, `Email verified for submissions. Session expires ${expiresText}.`, "success");
+      } else {
+        setAuthStatus(refs, "Verify this email before uploading.", "info");
+      }
+    }
+
+    async function readBlobArrayBuffer(blob) {
+      return blob.arrayBuffer();
+    }
+
+    function findLastSignature(view, signature) {
+      for (let i = view.byteLength - 4; i >= 0; i -= 1) {
+        if (view.getUint32(i, true) === signature) return i;
+      }
+      return -1;
+    }
+
+    function parseZip64Extra(view, start, length, originalUncompressed, originalCompressed, originalOffset) {
+      let cursor = start;
+      const result = {
+        uncompressedSize: originalUncompressed,
+        compressedSize: originalCompressed,
+        localHeaderOffset: originalOffset,
+      };
+      while (cursor + 4 <= start + length) {
+        const headerId = view.getUint16(cursor, true);
+        const dataSize = view.getUint16(cursor + 2, true);
+        const dataStart = cursor + 4;
+        if (headerId === 0x0001) {
+          let pos = dataStart;
+          if (result.uncompressedSize === 0xffffffff && pos + 8 <= dataStart + dataSize) {
+            result.uncompressedSize = Number(view.getBigUint64(pos, true));
+            pos += 8;
+          }
+          if (result.compressedSize === 0xffffffff && pos + 8 <= dataStart + dataSize) {
+            result.compressedSize = Number(view.getBigUint64(pos, true));
+            pos += 8;
+          }
+          if (result.localHeaderOffset === 0xffffffff && pos + 8 <= dataStart + dataSize) {
+            result.localHeaderOffset = Number(view.getBigUint64(pos, true));
+          }
+          break;
+        }
+        cursor = dataStart + dataSize;
+      }
+      return result;
+    }
+
+    async function buildZipManifest(file) {
+      const EOCD_SIGNATURE = 0x06054b50;
+      const ZIP64_LOCATOR_SIGNATURE = 0x07064b50;
+      const ZIP64_EOCD_SIGNATURE = 0x06064b50;
+      const CD_FILE_HEADER_SIGNATURE = 0x02014b50;
+      const tailSize = Math.min(file.size, 1024 * 128);
+      const tailBuffer = await readBlobArrayBuffer(file.slice(file.size - tailSize, file.size));
+      const tailView = new DataView(tailBuffer);
+      const eocdOffset = findLastSignature(tailView, EOCD_SIGNATURE);
+      if (eocdOffset < 0) throw new Error("Could not read ZIP central directory.");
+
+      let totalEntries = tailView.getUint16(eocdOffset + 10, true);
+      let centralDirectorySize = tailView.getUint32(eocdOffset + 12, true);
+      let centralDirectoryOffset = tailView.getUint32(eocdOffset + 16, true);
+
+      if (totalEntries === 0xffff || centralDirectorySize === 0xffffffff || centralDirectoryOffset === 0xffffffff) {
+        const locatorOffset = eocdOffset - 20;
+        if (locatorOffset < 0 || tailView.getUint32(locatorOffset, true) !== ZIP64_LOCATOR_SIGNATURE) {
+          throw new Error("ZIP64 archive is missing locator information.");
+        }
+        const zip64EocdAbsoluteOffset = Number(tailView.getBigUint64(locatorOffset + 8, true));
+        const zip64EocdBuffer = await readBlobArrayBuffer(file.slice(zip64EocdAbsoluteOffset, zip64EocdAbsoluteOffset + 56));
+        const zip64View = new DataView(zip64EocdBuffer);
+        if (zip64View.getUint32(0, true) !== ZIP64_EOCD_SIGNATURE) {
+          throw new Error("Invalid ZIP64 central directory record.");
+        }
+        totalEntries = Number(zip64View.getBigUint64(32, true));
+        centralDirectorySize = Number(zip64View.getBigUint64(40, true));
+        centralDirectoryOffset = Number(zip64View.getBigUint64(48, true));
+      }
+
+      const centralDirBuffer = await readBlobArrayBuffer(file.slice(centralDirectoryOffset, centralDirectoryOffset + centralDirectorySize));
+      const view = new DataView(centralDirBuffer);
+      const decoder = new TextDecoder("utf-8");
+      const entries = [];
+      let cursor = 0;
+      while (cursor + 46 <= view.byteLength) {
+        const sig = view.getUint32(cursor, true);
+        if (sig !== CD_FILE_HEADER_SIGNATURE) break;
+        let compressedSize = view.getUint32(cursor + 20, true);
+        let uncompressedSize = view.getUint32(cursor + 24, true);
+        let localHeaderOffset = view.getUint32(cursor + 42, true);
+        const fileNameLength = view.getUint16(cursor + 28, true);
+        const extraLength = view.getUint16(cursor + 30, true);
+        const commentLength = view.getUint16(cursor + 32, true);
+        const nameStart = cursor + 46;
+        const extraStart = nameStart + fileNameLength;
+        const fileNameBytes = new Uint8Array(centralDirBuffer, nameStart, fileNameLength);
+        const fileName = decoder.decode(fileNameBytes).replace(/\\/g, "/");
+
+        if (uncompressedSize === 0xffffffff || compressedSize === 0xffffffff || localHeaderOffset === 0xffffffff) {
+          const zip64 = parseZip64Extra(view, extraStart, extraLength, uncompressedSize, compressedSize, localHeaderOffset);
+          compressedSize = zip64.compressedSize;
+          uncompressedSize = zip64.uncompressedSize;
+          localHeaderOffset = zip64.localHeaderOffset;
+        }
+
+        if (fileName && !fileName.endsWith("/")) {
+          entries.push({
+            name: fileName,
+            compressed_size: Number(compressedSize || 0),
+            uncompressed_size: Number(uncompressedSize || 0),
+            local_header_offset: Number(localHeaderOffset || 0),
+          });
+        }
+
+        cursor = extraStart + extraLength + commentLength;
+      }
+
+      if (!entries.length || (totalEntries && entries.length > totalEntries + 5)) {
+        throw new Error("ZIP central directory could not be parsed.");
+      }
+      return entries;
     }
 
     function getAnatomyLabel(value) {
@@ -683,6 +902,56 @@
         throw new Error(data.error || `Request failed (${response.status}) at ${url}`);
       }
       return data;
+    }
+
+    async function sendBenchmarkCode(refs) {
+      const email = String(refs.email.value || "").trim().toLowerCase();
+      if (!email) {
+        setAuthStatus(refs, "Enter your approved email first.", "error");
+        return;
+      }
+      refs.authSendButton.disabled = true;
+      setAuthStatus(refs, "Sending verification code...", "info");
+      try {
+        await apiFetch("/benchmark/auth/start", {
+          method: "POST",
+          body: JSON.stringify({ email }),
+        });
+        clearAuthSession();
+        setAuthStatus(refs, "Verification code sent. Check your email.", "success");
+      } catch (error) {
+        setAuthStatus(refs, error.message || "Failed to send verification code.", "error");
+      } finally {
+        refs.authSendButton.disabled = false;
+      }
+    }
+
+    async function verifyBenchmarkCode(refs) {
+      const email = String(refs.email.value || "").trim().toLowerCase();
+      const code = String(refs.authCode.value || "").trim();
+      if (!email || !code) {
+        setAuthStatus(refs, "Enter your approved email and the verification code.", "error");
+        return;
+      }
+      refs.authVerifyButton.disabled = true;
+      setAuthStatus(refs, "Verifying code...", "info");
+      try {
+        const result = await apiFetch("/benchmark/auth/verify", {
+          method: "POST",
+          body: JSON.stringify({ email, code }),
+        });
+        saveAuthSession({
+          email,
+          authToken: result.auth_token,
+          expiresAt: Date.now() + Number(result.expires_in_seconds || 0) * 1000,
+        });
+        refs.authCode.value = "";
+        refreshAuthUi(refs);
+      } catch (error) {
+        setAuthStatus(refs, error.message || "Verification failed.", "error");
+      } finally {
+        refs.authVerifyButton.disabled = false;
+      }
     }
 
     function uploadFileWithProgress(url, file, progressElement, headers = {}) {
@@ -814,7 +1083,7 @@
             return `
               <tr class="border-b border-slate-200">
                 <td class="px-3 py-2 font-semibold">${entry.rank ?? "-"}</td>
-                <td class="px-3 py-2">${entry.email || entry.team_name || "-"}</td>
+                <td class="px-3 py-2">${entry.team_name || "-"}</td>
                 <td class="px-3 py-2">${psnr}</td>
                 <td class="px-3 py-2">${ssim}</td>
                 <td class="px-3 py-2">${nmse}</td>
@@ -841,18 +1110,29 @@
         return;
       }
 
+      const teamName = String(refs.teamName.value || "").trim();
       const email = String(refs.email.value || "").trim().toLowerCase();
       const modelDetails = String(refs.modelDetails.value || "").trim();
       const file = refs.file.files && refs.file.files[0];
       const cfg = CHALLENGES[challengeId];
       const acceleration = cfg.requiresAcceleration ? String(refs.submitAcceleration.value || "8x") : "";
+      const authSession = getAuthSessionForEmail(email);
 
+      if (!teamName) {
+        setStatus(refs, "Team name is required.", "error");
+        return;
+      }
       if (!email) {
         setStatus(refs, "Approved email is required.", "error");
         return;
       }
       if (!file) {
         setStatus(refs, "Select a ZIP file.", "error");
+        return;
+      }
+      if (!authSession) {
+        setStatus(refs, "Verify your approved email before uploading.", "error");
+        refreshAuthUi(refs);
         return;
       }
       const challengeUploadLimit = getUploadLimitBytes(challengeId, acceleration);
@@ -863,16 +1143,21 @@
 
       refs.submitButton.disabled = true;
       refs.uploadProgress.textContent = "";
-      setStatus(refs, "Creating submission...", "info");
+      setStatus(refs, "Checking ZIP structure before upload...", "info");
 
       try {
+        const manifestEntries = await buildZipManifest(file);
         const created = await apiFetch("/benchmark/submissions", {
           method: "POST",
           body: JSON.stringify({
+            auth_token: authSession.authToken,
+            team_name: teamName,
             email,
             model_details: modelDetails,
             challenge_id: challengeId,
             acceleration,
+            zip_size_bytes: file.size,
+            manifest_entries: manifestEntries,
           }),
         });
 
@@ -885,6 +1170,18 @@
         }
         refs.statusSubmissionId.textContent = submissionId;
         refs.statusState.textContent = "uploading";
+        if (Array.isArray(created.warnings) && created.warnings.length) {
+          refs.statusWarningsList.innerHTML = "";
+          created.warnings.forEach((warning) => {
+            const li = document.createElement("li");
+            li.textContent = String(warning);
+            refs.statusWarningsList.appendChild(li);
+          });
+          refs.statusWarningsBox.classList.remove("hidden");
+        } else {
+          refs.statusWarningsList.innerHTML = "";
+          refs.statusWarningsBox.classList.add("hidden");
+        }
 
         setStatus(refs, "Uploading ZIP to storage...", "info");
         await uploadFileWithProgress(created.upload.url, file, refs.uploadProgress, created.upload.headers || {});
@@ -946,6 +1243,7 @@
       if (!cfg.hasAnatomyFilter) refs.anatomySelect.value = "avg";
 
       updateMetricButtons(refs, challengeId);
+      refreshAuthUi(refs);
 
       if (shouldLoad) loadLeaderboard(challengeId);
     }
@@ -992,8 +1290,12 @@
         });
       });
 
+      refs.email.addEventListener("input", () => refreshAuthUi(refs));
+      refs.authSendButton.addEventListener("click", () => sendBenchmarkCode(refs));
+      refs.authVerifyButton.addEventListener("click", () => verifyBenchmarkCode(refs));
       refs.refreshButton.addEventListener("click", () => loadLeaderboard(challengeId));
       refs.form.addEventListener("submit", (event) => handleSubmission(event, challengeId));
+      refreshAuthUi(refs);
     }
 
     challengeTabs.forEach((tab) => {
