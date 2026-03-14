@@ -177,6 +177,7 @@
             <dl class="mt-4 text-sm space-y-2">
               <div class="flex justify-between gap-4"><dt class="text-gray-500">Submission ID</dt><dd class="status-submission-id font-mono text-xs text-gray-700 break-all text-right">-</dd></div>
               <div class="flex justify-between gap-4"><dt class="text-gray-500">Queue status</dt><dd class="status-state font-semibold text-gray-700">-</dd></div>
+              <div class="flex justify-between gap-4"><dt class="text-gray-500">Evaluation step</dt><dd class="status-step font-semibold text-gray-700 text-right">-</dd></div>
               <div class="flex justify-between gap-4"><dt class="text-gray-500">Primary metric</dt><dd class="status-metric font-semibold text-gray-700">-</dd></div>
             </dl>
             <div class="status-warnings-box mt-4 hidden rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
@@ -309,6 +310,7 @@
             <dl class="mt-4 text-sm space-y-2">
               <div class="flex justify-between gap-4"><dt class="text-gray-500">Submission ID</dt><dd class="status-submission-id font-mono text-xs text-gray-700 break-all text-right">-</dd></div>
               <div class="flex justify-between gap-4"><dt class="text-gray-500">Queue status</dt><dd class="status-state font-semibold text-gray-700">-</dd></div>
+              <div class="flex justify-between gap-4"><dt class="text-gray-500">Evaluation step</dt><dd class="status-step font-semibold text-gray-700 text-right">-</dd></div>
               <div class="flex justify-between gap-4"><dt class="text-gray-500">Primary metric</dt><dd class="status-metric font-semibold text-gray-700">-</dd></div>
             </dl>
             <div class="status-warnings-box mt-4 hidden rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
@@ -440,6 +442,7 @@
             <dl class="mt-4 text-sm space-y-2">
               <div class="flex justify-between gap-4"><dt class="text-gray-500">Submission ID</dt><dd class="status-submission-id font-mono text-xs text-gray-700 break-all text-right">-</dd></div>
               <div class="flex justify-between gap-4"><dt class="text-gray-500">Queue status</dt><dd class="status-state font-semibold text-gray-700">-</dd></div>
+              <div class="flex justify-between gap-4"><dt class="text-gray-500">Evaluation step</dt><dd class="status-step font-semibold text-gray-700 text-right">-</dd></div>
               <div class="flex justify-between gap-4"><dt class="text-gray-500">Primary metric</dt><dd class="status-metric font-semibold text-gray-700">-</dd></div>
             </dl>
             <div class="status-warnings-box mt-4 hidden rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
@@ -622,6 +625,7 @@
         statusBox: panel.querySelector(".status-box"),
         statusSubmissionId: panel.querySelector(".status-submission-id"),
         statusState: panel.querySelector(".status-state"),
+        statusStep: panel.querySelector(".status-step"),
         statusMetric: panel.querySelector(".status-metric"),
         statusWarningsBox: panel.querySelector(".status-warnings-box"),
         statusWarningsList: panel.querySelector(".status-warnings-list"),
@@ -862,6 +866,47 @@
       return Number.isFinite(value) ? value.toFixed(4) : "-";
     }
 
+    function formatDuration(seconds) {
+      const totalSeconds = Math.max(0, Math.round(Number(seconds) || 0));
+      const mins = Math.floor(totalSeconds / 60);
+      const secs = totalSeconds % 60;
+      if (mins <= 0) return `${secs}s`;
+      if (mins < 60) return `${mins}m ${secs}s`;
+      const hours = Math.floor(mins / 60);
+      const remMins = mins % 60;
+      return `${hours}h ${remMins}m`;
+    }
+
+    function formatTransferRate(bytesPerSecond) {
+      const value = Number(bytesPerSecond) || 0;
+      if (value <= 0) return "";
+      return `${formatBytes(value)}/s`;
+    }
+
+    function describeSubmissionStep(submission) {
+      const status = String(submission.status || "").toLowerCase();
+      const completedChunks = Number(submission.completed_chunks || 0);
+      const totalChunks = Number(submission.total_chunks || 0);
+      const aggregateEnqueued = Boolean(submission.aggregate_enqueued);
+
+      if (!status) return "-";
+      if (status === "created") return "Preparing upload";
+      if (status === "queued") return "Waiting for worker";
+      if (status === "evaluating") {
+        if (totalChunks > 0) {
+          if (completedChunks >= totalChunks) {
+            return aggregateEnqueued ? "Aggregating chunk metrics" : `Finishing chunked evaluation (${completedChunks}/${totalChunks})`;
+          }
+          return `Evaluating chunks ${completedChunks}/${totalChunks}`;
+        }
+        return "Evaluating hidden ground truth";
+      }
+      if (status === "completed") return "Evaluation complete";
+      if (status === "failed") return "Evaluation failed";
+      if (status === "uploading") return "Uploading ZIP";
+      return status.replace(/_/g, " ");
+    }
+
     function getUploadLimitBytes(challengeId, accelerationValue) {
       const cfg = CHALLENGES[challengeId] || {};
       if (cfg.requiresAcceleration) {
@@ -957,17 +1002,25 @@
     function uploadFileWithProgress(url, file, progressElement, headers = {}) {
       return new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
+        const startedAt = Date.now();
         xhr.open("PUT", url, true);
         Object.entries(headers).forEach(([key, value]) => xhr.setRequestHeader(key, value));
 
         xhr.upload.onprogress = (event) => {
           if (!event.lengthComputable) return;
           const pct = Math.round((event.loaded / event.total) * 100);
-          progressElement.textContent = `Upload: ${pct}%`;
+          const elapsedSeconds = Math.max((Date.now() - startedAt) / 1000, 0.25);
+          const bytesPerSecond = event.loaded / elapsedSeconds;
+          const remainingBytes = Math.max(event.total - event.loaded, 0);
+          const remainingSeconds = bytesPerSecond > 0 ? remainingBytes / bytesPerSecond : 0;
+          const rateText = formatTransferRate(bytesPerSecond);
+          const etaText = remainingBytes > 0 ? formatDuration(remainingSeconds) : "0s";
+          progressElement.textContent = `Upload: ${pct}%${rateText ? ` · ${rateText}` : ""} · ETA ${etaText}`;
         };
 
         xhr.onload = () => {
           if (xhr.status >= 200 && xhr.status < 300) {
+            progressElement.textContent = "Upload: 100%";
             resolve();
             return;
           }
@@ -983,6 +1036,7 @@
     function renderSubmission(refs, submission) {
       refs.statusSubmissionId.textContent = submission.submission_id || "-";
       refs.statusState.textContent = submission.status || "-";
+      refs.statusStep.textContent = describeSubmissionStep(submission);
 
       const metricName = metricToApi(submission.primary_metric_name || BENCHMARK_API_CONFIG.primaryMetric);
       const metricValue = Number(submission.primary_metric);
@@ -1007,7 +1061,8 @@
       } else if (submission.status === "failed") {
         setStatus(refs, submission.error_message || "Evaluation failed.", "error");
       } else {
-        setStatus(refs, `Submission status: ${submission.status}.`, "info");
+        const step = describeSubmissionStep(submission);
+        setStatus(refs, `Submission status: ${submission.status}.${step && step !== "-" ? ` ${step}.` : ""}`, "info");
       }
     }
 
@@ -1170,6 +1225,7 @@
         }
         refs.statusSubmissionId.textContent = submissionId;
         refs.statusState.textContent = "uploading";
+        refs.statusStep.textContent = "Uploading ZIP";
         if (Array.isArray(created.warnings) && created.warnings.length) {
           refs.statusWarningsList.innerHTML = "";
           created.warnings.forEach((warning) => {
@@ -1193,6 +1249,7 @@
         });
 
         refs.statusState.textContent = "queued";
+        refs.statusStep.textContent = "Waiting for worker";
         setStatus(refs, "Submission queued. Polling evaluation status...", "success");
 
         state[challengeId].acceleration = acceleration || state[challengeId].acceleration;
