@@ -178,6 +178,7 @@
               <div class="flex justify-between gap-4"><dt class="text-gray-500">Submission ID</dt><dd class="status-submission-id font-mono text-xs text-gray-700 break-all text-right">-</dd></div>
               <div class="flex justify-between gap-4"><dt class="text-gray-500">Queue status</dt><dd class="status-state font-semibold text-gray-700">-</dd></div>
               <div class="flex justify-between gap-4"><dt class="text-gray-500">Evaluation step</dt><dd class="status-step font-semibold text-gray-700 text-right">-</dd></div>
+              <div class="flex justify-between gap-4"><dt class="text-gray-500">Estimated remaining</dt><dd class="status-eta font-semibold text-gray-700 text-right">-</dd></div>
               <div class="flex justify-between gap-4"><dt class="text-gray-500">Primary metric</dt><dd class="status-metric font-semibold text-gray-700">-</dd></div>
             </dl>
             <div class="status-warnings-box mt-4 hidden rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
@@ -311,6 +312,7 @@
               <div class="flex justify-between gap-4"><dt class="text-gray-500">Submission ID</dt><dd class="status-submission-id font-mono text-xs text-gray-700 break-all text-right">-</dd></div>
               <div class="flex justify-between gap-4"><dt class="text-gray-500">Queue status</dt><dd class="status-state font-semibold text-gray-700">-</dd></div>
               <div class="flex justify-between gap-4"><dt class="text-gray-500">Evaluation step</dt><dd class="status-step font-semibold text-gray-700 text-right">-</dd></div>
+              <div class="flex justify-between gap-4"><dt class="text-gray-500">Estimated remaining</dt><dd class="status-eta font-semibold text-gray-700 text-right">-</dd></div>
               <div class="flex justify-between gap-4"><dt class="text-gray-500">Primary metric</dt><dd class="status-metric font-semibold text-gray-700">-</dd></div>
             </dl>
             <div class="status-warnings-box mt-4 hidden rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
@@ -443,6 +445,7 @@
               <div class="flex justify-between gap-4"><dt class="text-gray-500">Submission ID</dt><dd class="status-submission-id font-mono text-xs text-gray-700 break-all text-right">-</dd></div>
               <div class="flex justify-between gap-4"><dt class="text-gray-500">Queue status</dt><dd class="status-state font-semibold text-gray-700">-</dd></div>
               <div class="flex justify-between gap-4"><dt class="text-gray-500">Evaluation step</dt><dd class="status-step font-semibold text-gray-700 text-right">-</dd></div>
+              <div class="flex justify-between gap-4"><dt class="text-gray-500">Estimated remaining</dt><dd class="status-eta font-semibold text-gray-700 text-right">-</dd></div>
               <div class="flex justify-between gap-4"><dt class="text-gray-500">Primary metric</dt><dd class="status-metric font-semibold text-gray-700">-</dd></div>
             </dl>
             <div class="status-warnings-box mt-4 hidden rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
@@ -626,6 +629,7 @@
         statusSubmissionId: panel.querySelector(".status-submission-id"),
         statusState: panel.querySelector(".status-state"),
         statusStep: panel.querySelector(".status-step"),
+        statusEta: panel.querySelector(".status-eta"),
         statusMetric: panel.querySelector(".status-metric"),
         statusWarningsBox: panel.querySelector(".status-warnings-box"),
         statusWarningsList: panel.querySelector(".status-warnings-list"),
@@ -907,6 +911,38 @@
       return status.replace(/_/g, " ");
     }
 
+    function estimateEvaluationEtaSeconds(submission) {
+      const status = String(submission.status || "").toLowerCase();
+      if (status !== "evaluating") return null;
+
+      const totalChunks = Number(submission.total_chunks || 0);
+      const completedChunks = Number(submission.completed_chunks || 0);
+      const startedAtMs = Date.parse(submission.evaluation_started_at || submission.updated_at || submission.created_at || "");
+      if (!Number.isFinite(startedAtMs)) return null;
+
+      if (totalChunks > 0) {
+        if (completedChunks <= 0) return null;
+        const elapsedSeconds = Math.max((Date.now() - startedAtMs) / 1000, 1);
+        const secondsPerChunk = elapsedSeconds / Math.max(completedChunks, 1);
+        const remainingChunks = Math.max(totalChunks - completedChunks, 0);
+        const aggregationSeconds = remainingChunks === 0 ? 20 : 30;
+        return Math.max((secondsPerChunk * remainingChunks) + aggregationSeconds, 5);
+      }
+
+      return null;
+    }
+
+    function describeSubmissionEta(submission) {
+      const status = String(submission.status || "").toLowerCase();
+      if (status === "queued") return "Waiting for worker";
+      if (status === "uploading") return "Before evaluation starts";
+      if (status === "completed" || status === "failed") return "-";
+      const seconds = estimateEvaluationEtaSeconds(submission);
+      if (Number.isFinite(seconds) && seconds > 0) return formatDuration(seconds);
+      if (status === "evaluating") return "Calculating...";
+      return "-";
+    }
+
     function getUploadLimitBytes(challengeId, accelerationValue) {
       const cfg = CHALLENGES[challengeId] || {};
       if (cfg.requiresAcceleration) {
@@ -1037,6 +1073,7 @@
       refs.statusSubmissionId.textContent = submission.submission_id || "-";
       refs.statusState.textContent = submission.status || "-";
       refs.statusStep.textContent = describeSubmissionStep(submission);
+      refs.statusEta.textContent = describeSubmissionEta(submission);
 
       const metricName = metricToApi(submission.primary_metric_name || BENCHMARK_API_CONFIG.primaryMetric);
       const metricValue = Number(submission.primary_metric);
@@ -1226,6 +1263,7 @@
         refs.statusSubmissionId.textContent = submissionId;
         refs.statusState.textContent = "uploading";
         refs.statusStep.textContent = "Uploading ZIP";
+        refs.statusEta.textContent = "After upload completes";
         if (Array.isArray(created.warnings) && created.warnings.length) {
           refs.statusWarningsList.innerHTML = "";
           created.warnings.forEach((warning) => {
@@ -1250,6 +1288,7 @@
 
         refs.statusState.textContent = "queued";
         refs.statusStep.textContent = "Waiting for worker";
+        refs.statusEta.textContent = "Waiting for worker";
         setStatus(refs, "Submission queued. Polling evaluation status...", "success");
 
         state[challengeId].acceleration = acceleration || state[challengeId].acceleration;
