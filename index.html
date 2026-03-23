@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MosaicMRI — Raw MSK MRI Dataset</title>
-  <meta name="description" content="MosaicMRI: A large-scale dataset of fully-sampled raw musculoskeletal MRI designed for accelerated reconstruction, robustness, and transfer studies." />
+  <meta name="description" content="MosaicMRI: A large-scale dataset of fully-sampled raw musculoskeletal MRI designed for research and benchmarking." />
   <script>
     (function () {
       try {
@@ -949,6 +949,13 @@ pip install -r requirements.txt</code></pre>
     const anatomyLabel = document.getElementById("anatomyLabel");
 
     if (anatomyTabs.length && axialImg && coronalImg && sagittalImg && anatomyLabel) {
+      const applyUpperExtremityRotations = (tab) => {
+        const isUpperExtremity = String(tab.dataset.name || "").trim().toLowerCase() === "upper extremity";
+        coronalImg.style.transform = isUpperExtremity ? "rotate(-90deg)" : "";
+        axialImg.style.transform = isUpperExtremity ? "rotate(-90deg)" : "";
+        sagittalImg.style.transform = isUpperExtremity ? "rotate(90deg)" : "";
+      };
+
       const setActiveTab = (tab) => {
         anatomyTabs.forEach((t) => {
           t.classList.remove("bg-[#4169E1]", "text-white", "border-[#4169E1]", "shadow");
@@ -963,11 +970,18 @@ pip install -r requirements.txt</code></pre>
         coronalImg.src = tab.dataset.cor;
         sagittalImg.src = tab.dataset.sag;
         anatomyLabel.textContent = tab.dataset.name;
+        applyUpperExtremityRotations(tab);
       };
 
       anatomyTabs.forEach((tab) => {
         tab.addEventListener("click", () => setActiveTab(tab));
       });
+
+      const initiallySelectedTab =
+        Array.from(anatomyTabs).find((tab) => tab.getAttribute("aria-selected") === "true") || anatomyTabs[0];
+      if (initiallySelectedTab) {
+        applyUpperExtremityRotations(initiallySelectedTab);
+      }
     }
 
     const orientationCards = document.querySelectorAll(".orientation-card");
