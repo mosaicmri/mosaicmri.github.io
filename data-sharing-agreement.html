@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MosaicMRI Data Sharing Agreement</title>
+  <meta name="description" content="MosaicMRI Data Sharing Agreement for Research and Educational Use." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./theme.css" />
+  <script>
+    (() => {
+      try {
+        const saved = localStorage.getItem("mosaic_theme");
+        const systemDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const useDark = saved === "dark" || (!saved && systemDark);
+        if (useDark) document.documentElement.classList.add("dark");
+      } catch (_) {}
+    })();
+  </script>
+</head>
+<body class="bg-[#F5F8FF] text-slate-900">
+  <header class="bg-[#00206f]/85 text-white">
+    <nav class="container mx-auto flex items-center justify-between px-6 py-4">
+      <a href="./" class="text-lg font-bold tracking-tight">MosaicMRI</a>
+      <div class="flex items-center gap-3">
+        <button type="button" data-theme-toggle aria-label="Toggle theme"
+                class="rounded-xl border border-white/50 bg-white/10 px-3 py-2 text-sm font-semibold text-white transition hover:bg-white/20">
+          ☾
+        </button>
+        <a href="./#access"
+           class="rounded-xl border border-white/50 bg-white/10 px-3 py-2 text-sm font-semibold text-white transition hover:bg-white/20">
+          Back to Request Access
+        </a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container mx-auto max-w-5xl px-6 py-12">
+    <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm md:p-10">
+      <div class="border-b border-slate-200 pb-6">
+        <p class="text-sm font-semibold uppercase tracking-[0.22em] text-[#1F3B96]">MosaicMRI</p>
+        <h1 class="mt-3 text-3xl font-extrabold tracking-tight text-[#1F3B96] md:text-4xl">
+          Data Sharing Agreement for Research and Educational Use
+        </h1>
+      </div>
+
+      <div class="mt-8 space-y-6 text-sm leading-7 text-slate-700">
+        <p>
+          By registering for access to the Dataset released by the University of Southern California (“USC”),
+          I agree to this Dataset Sharing Agreement (“Agreement”), as well as to any additional terms of use as
+          posted and updated periodically on USC’s designated website(s).
+        </p>
+        <p>
+          The Dataset is proprietary to and owned by USC. Other than the rights granted herein, USC retains all rights,
+          title, and interest in the Dataset.
+        </p>
+
+        <section>
+          <h2 class="text-base font-bold text-slate-900">1. License Grant</h2>
+          <p class="mt-2">
+            Subject to the provisions of this Agreement, USC grants to me a non-exclusive, royalty-free license to
+            access and use the Dataset for internal research or educational purposes only. This Agreement conveys no
+            other rights of any sort with respect to the Dataset or the intellectual property embodied therein.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-base font-bold text-slate-900">2. Access and Use Restrictions</h2>
+          <ul class="mt-2 list-disc space-y-2 pl-6">
+            <li>I will receive a download link to access the Dataset without charge, solely for internal research or educational use.</li>
+            <li>I will not share the download link with others. Each user must register individually and agree to this Agreement.</li>
+            <li>I will not sell, license, monetize, or commercially exploit any portion of the Dataset.</li>
+            <li>I will not distribute, publish, reproduce, retransmit, copy, or otherwise transfer any portion of the Dataset, or variables derived from it, to anyone outside my direct supervision, except for uses in academic publications and presentations that properly cite the Dataset.</li>
+            <li>I will ensure that anyone under my supervision who accesses the Dataset agrees to the same restrictions and obligations.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-base font-bold text-slate-900">3. Compliance and Safeguards</h2>
+          <ul class="mt-2 list-disc space-y-2 pl-6">
+            <li>I will comply with all applicable laws, governmental regulations, and institutional policies, including obtaining all necessary approvals.</li>
+            <li>I will maintain the security and confidentiality of the Dataset and use appropriate safeguards to prevent unauthorized use or disclosure.</li>
+            <li>I will not attempt to re-identify subjects, link the Dataset with other datasets to enable identification, or contact any individual subjects.</li>
+            <li>If I suspect that any portion of the Dataset contains protected health information (PHI), I will not use it, will immediately destroy it, and will notify USC promptly.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-base font-bold text-slate-900">4. Acknowledgement and Citations</h2>
+          <p class="mt-2">
+            I agree to acknowledge the Dataset in any publications or presentations by citing the designated references
+            provided by USC. Language similar to the following must be included:
+          </p>
+          <blockquote class="mt-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 italic text-slate-700">
+            “Data used in the preparation of this article were obtained from the University of Southern California
+            MosaicMRI database. USC investigators provided data but did not participate in analysis or writing of this report.”
+          </blockquote>
+          <p class="mt-3">
+            USC will provide official citation references (journal publications, technical reports, or arXiv papers)
+            to be used in each manuscript.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-base font-bold text-slate-900">5. Limitations</h2>
+          <ul class="mt-2 list-disc space-y-2 pl-6">
+            <li>The Dataset is provided strictly for research and educational purposes and is not intended for clinical use or diagnosis.</li>
+            <li>No warranties are made, express or implied, including warranties of merchantability, fitness for a particular purpose, or non-infringement.</li>
+            <li>USC disclaims liability for any loss, claim, damage, or liability arising from or connected to this Agreement or the Dataset.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-base font-bold text-slate-900">6. Indemnification</h2>
+          <p class="mt-2">
+            I agree to indemnify, defend, and hold harmless USC and its trustees, directors, officers, faculty, staff,
+            students, affiliates, and agents from any claims, damages, or losses resulting from my access to or use of
+            the Dataset, except to the extent caused by the gross negligence or willful misconduct of USC.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-base font-bold text-slate-900">7. Termination</h2>
+          <ul class="mt-2 list-disc space-y-2 pl-6">
+            <li>USC may terminate this Agreement immediately if I violate its terms.</li>
+            <li>Upon termination or completion of my work, I will destroy all copies of the Dataset.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 class="text-base font-bold text-slate-900">8. Governing Law and Venue</h2>
+          <p class="mt-2">
+            This Agreement shall be governed by and construed in accordance with the laws of the State of California.
+            Any dispute arising under this Agreement shall be brought exclusively in state or federal courts located in
+            Los Angeles, California.
+          </p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script src="./js/theme.js"></script>
+</body>
+</html>
