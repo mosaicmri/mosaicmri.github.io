@@ -953,14 +953,21 @@ pip install -r requirements.txt</code></pre>
         const anatomyName = String(tab.dataset.name || "").trim().toLowerCase();
         const isUpperExtremity = anatomyName === "upper extremity";
         const isShoulder = anatomyName === "shoulder";
+        const isPelvis = anatomyName === "pelvis";
 
         coronalImg.style.transform = isUpperExtremity
           ? "rotate(-90deg)"
+          : isPelvis
+            ? "rotate(90deg)"
           : isShoulder
             ? "rotate(180deg)"
             : "";
         axialImg.style.transform = isUpperExtremity ? "rotate(-90deg)" : "";
-        sagittalImg.style.transform = isUpperExtremity ? "rotate(90deg)" : "";
+        sagittalImg.style.transform = isUpperExtremity
+          ? "rotate(90deg)"
+          : isPelvis
+            ? "rotate(-90deg)"
+            : "";
       };
 
       const setActiveTab = (tab) => {
