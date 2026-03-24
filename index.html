@@ -950,8 +950,15 @@ pip install -r requirements.txt</code></pre>
 
     if (anatomyTabs.length && axialImg && coronalImg && sagittalImg && anatomyLabel) {
       const applyUpperExtremityRotations = (tab) => {
-        const isUpperExtremity = String(tab.dataset.name || "").trim().toLowerCase() === "upper extremity";
-        coronalImg.style.transform = isUpperExtremity ? "rotate(-90deg)" : "";
+        const anatomyName = String(tab.dataset.name || "").trim().toLowerCase();
+        const isUpperExtremity = anatomyName === "upper extremity";
+        const isShoulder = anatomyName === "shoulder";
+
+        coronalImg.style.transform = isUpperExtremity
+          ? "rotate(-90deg)"
+          : isShoulder
+            ? "rotate(180deg)"
+            : "";
         axialImg.style.transform = isUpperExtremity ? "rotate(-90deg)" : "";
         sagittalImg.style.transform = isUpperExtremity ? "rotate(90deg)" : "";
       };
