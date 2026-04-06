@@ -4,25 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MosaicMRI — Access Approvals</title>
-  <script>
-    (function () {
-      try {
-        var saved = localStorage.getItem("mosaic_theme");
-        var dark;
-        if (saved === "dark") {
-          dark = true;
-        } else if (saved === "light") {
-          dark = false;
-        } else {
-          dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        }
-        if (dark) document.documentElement.classList.add("dark");
-      } catch (_) {}
-    })();
-  </script>
   <script src="js/site-config.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="theme.css" />
 </head>
 <body class="bg-gray-50 text-gray-900">
   <header class="border-b bg-white">
@@ -30,10 +13,6 @@
       <div class="font-bold text-lg"><span class="text-[#6A7BA2]">Mosaic</span>MRI</div>
       <div class="flex items-center gap-3">
         <span class="text-sm text-gray-500">Access Approvals</span>
-        <button type="button" data-theme-toggle aria-label="Toggle theme"
-                class="px-3 py-1.5 rounded-xl border border-gray-300 bg-white text-sm font-semibold text-gray-700 hover:bg-gray-50 transition">
-          ☾
-        </button>
       </div>
     </div>
   </header>
@@ -59,7 +38,6 @@
   </main>
 
   <script src="js/access-api.js"></script>
-  <script src="js/theme.js"></script>
   <script>
     const callAccessApi = window.MosaicAccessApi && window.MosaicAccessApi.callAccessApi;
 

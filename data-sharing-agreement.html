@@ -6,27 +6,12 @@
   <title>MosaicMRI Data Sharing Agreement</title>
   <meta name="description" content="MosaicMRI Data Sharing Agreement for Research and Educational Use." />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="./theme.css" />
-  <script>
-    (() => {
-      try {
-        const saved = localStorage.getItem("mosaic_theme");
-        const systemDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-        const useDark = saved === "dark" || (!saved && systemDark);
-        if (useDark) document.documentElement.classList.add("dark");
-      } catch (_) {}
-    })();
-  </script>
 </head>
 <body class="bg-[#F5F8FF] text-slate-900">
   <header class="bg-[#00206f]/85 text-white">
     <nav class="container mx-auto flex items-center justify-between px-6 py-4">
       <a href="./" class="text-lg font-bold tracking-tight">MosaicMRI</a>
       <div class="flex items-center gap-3">
-        <button type="button" data-theme-toggle aria-label="Toggle theme"
-                class="rounded-xl border border-white/50 bg-white/10 px-3 py-2 text-sm font-semibold text-white transition hover:bg-white/20">
-          ☾
-        </button>
         <a href="./#access"
            class="rounded-xl border border-white/50 bg-white/10 px-3 py-2 text-sm font-semibold text-white transition hover:bg-white/20">
           Back to Request Access
@@ -139,6 +124,5 @@
     </div>
   </main>
 
-  <script src="./js/theme.js"></script>
 </body>
 </html>

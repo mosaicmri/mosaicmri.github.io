@@ -5,25 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MosaicMRI — Raw MSK MRI Dataset</title>
   <meta name="description" content="MosaicMRI: A large-scale, diverse dataset of fully sampled raw musculoskeletal MRI for training and evaluating AI across reconstruction, robustness, and generalization." />
-  <script>
-    (function () {
-      try {
-        var saved = localStorage.getItem("mosaic_theme");
-        var dark;
-        if (saved === "dark") {
-          dark = true;
-        } else if (saved === "light") {
-          dark = false;
-        } else {
-          dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        }
-        if (dark) document.documentElement.classList.add("dark");
-      } catch (_) {}
-    })();
-  </script>
   <script src="js/site-config.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="theme.css" />
   <style>
     :root {
       --anchor-offset: 10px;
@@ -221,10 +204,6 @@
         <a href="#cite" class="hover:text-white">Cite</a>
       </div>
       <div class="flex items-center gap-2">
-        <button type="button" data-theme-toggle aria-label="Toggle theme"
-                class="px-3 py-2 text-sm font-semibold rounded-xl border border-white/50 bg-white/10 text-white hover:bg-white/20 transition">
-          ☾
-        </button>
         <a href="https://github.com/paularguello07/msk_mri_dataset" target="_blank" rel="noopener noreferrer"
            class="px-3 py-2 text-sm font-semibold rounded-xl border border-white/50 bg-white/10 text-white hover:bg-white/20 transition">
           GitHub
@@ -921,7 +900,6 @@ pip install -r requirements.txt</code></pre>
 
   <script src="js/shared-footer.js"></script>
   <script src="js/access-api.js"></script>
-  <script src="js/theme.js"></script>
   <script>
     if (window.MosaicSharedFooter) {
       window.MosaicSharedFooter.renderFooter({ mountId: "sharedFooter" });

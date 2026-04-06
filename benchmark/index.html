@@ -5,25 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MosaicMRI Benchmark</title>
   <meta name="description" content="Submit reconstruction results for hidden-ground-truth evaluation on MosaicMRI." />
-  <script>
-    (function () {
-      try {
-        var saved = localStorage.getItem("mosaic_theme");
-        var dark;
-        if (saved === "dark") {
-          dark = true;
-        } else if (saved === "light") {
-          dark = false;
-        } else {
-          dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        }
-        if (dark) document.documentElement.classList.add("dark");
-      } catch (_) {}
-    })();
-  </script>
   <script src="../js/site-config.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="../theme.css" />
 </head>
 <body class="bg-[#E8EEFF] text-slate-900 min-h-screen">
   <header class="sticky top-0 z-50 bg-[#00206f]/85 border-b border-[#00206f]/85">
@@ -32,10 +15,6 @@
         <span class="text-[#9FB6FF]">Mosaic</span>MRI
       </a>
       <div class="flex items-center gap-2">
-        <button type="button" data-theme-toggle aria-label="Toggle theme"
-                class="px-3 py-2.5 rounded-xl border border-white/50 bg-white/10 text-white text-sm font-semibold hover:bg-white/20 transition">
-          ☾
-        </button>
         <a href="../"
            class="px-5 py-2.5 rounded-xl bg-[#4169E1] border border-[#7EA0FF] text-white text-sm font-semibold hover:bg-[#2F4FBF] transition">
           Dataset
@@ -506,7 +485,6 @@
 
   <script src="./config.js"></script>
   <script src="../js/shared-footer.js"></script>
-  <script src="../js/theme.js"></script>
   <script>
     if (window.MosaicSharedFooter) {
       window.MosaicSharedFooter.renderFooter({ mountId: "sharedFooter" });
